@@ -1,26 +1,39 @@
-class Pila <T>{
-    private val items = mutableListOf<T>()
 
-    fun top(){
-        return items[(items.size - 1)]
+class Pila <T>(){
+    private val contenido = mutableListOf<T>()
+
+    fun top(): T {
+        return contenido[contenido.size-1]
     }
+
     fun push(item: T){
-        items.add(item)
+        contenido.add(item)
     }
     fun pop(): T?{
-        return if (items.isEmpty()) null
-        else items.removeAt(items.size - 1)
+        return if (contenido.isEmpty()) null
+        else contenido.removeAt(contenido.size - 1)
     }
     fun isEmpty(): Boolean{
-        return items.isEmpty()
+        return contenido.isEmpty()
     }
 }
 
-fun <T> reverse(lista: List<String>):List<String>{
-    val iterador = lista.iterator()
-    val listaReversa = mutableListOf<String>()
-    while (iterador.hasNext()){
-        listaReversa.add(iterador.next())
+/**
+ * Recibe una lista y retorna dicha lista invertida mediante el uso de la clase Pila y los iterators
+ * @param lista -> Lista que puede contener cualquier tipo de dato
+ * @return la lista ingresada, pero invertida
+ */
+fun <T> reverse(lista: List<T>): List<Any> {
+    val iteradorLista = lista.iterator()
+    val stackLista = Pila<T>()
+    val listaReversa = mutableListOf<Any>()
+
+    while (iteradorLista.hasNext()){
+        stackLista.push(iteradorLista.next())
     }
-    return listaReversa.toList()
+
+    while (!stackLista.isEmpty()){
+        listaReversa.add(stackLista.pop()!!)
+    }
+    return listaReversa
 }
